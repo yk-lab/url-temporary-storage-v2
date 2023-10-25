@@ -1,5 +1,6 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
+  browserNodeBuiltinsPolyfill: { modules: { fs: true, path: true } },
   ignoredRouteFiles: ["**/.*"],
   server: "./server.ts",
   serverBuildPath: "functions/[[path]].js",
