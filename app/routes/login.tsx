@@ -18,6 +18,9 @@ export let loader = async ({ context, request }: LoaderFunctionArgs) => {
   // you can customize it passing a `sessionMagicLinkKey` when creating an
   // instance.
   const session = await getUserSession(context, request);
+  session.unset("signup:email");
+  session.unset("signup:verified");
+
   return json({
     magicLinkSent: session.has("auth:magiclink"),
     magicLinkEmail: session.get("auth:email"),
@@ -112,7 +115,7 @@ export default function Login() {
               {magicError ? <p>{magicError}</p> : ""}
             </div>
           ) : (
-            <Form className="space-y-6" method="POST">
+            <Form className="grid grid-cols-1 gap-y-6" method="POST">
               <input
                 type="hidden"
                 name="redirectTo"

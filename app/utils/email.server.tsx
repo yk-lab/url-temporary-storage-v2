@@ -69,7 +69,9 @@ const magicLinkEmail = (options: {
   return { subject, body };
 };
 
-export const sendEmail = (context: AppLoadContext): SendEmailFunction<User> => {
+export const sendLoginEmail = (
+  context: AppLoadContext,
+): SendEmailFunction<User> => {
   return async (options: {
     emailAddress: string;
     magicLink: string;
@@ -80,6 +82,109 @@ export const sendEmail = (context: AppLoadContext): SendEmailFunction<User> => {
     const { subject, body } = options.user
       ? magicLinkEmail(options)
       : notFoundUserEmail(options);
+    await emailProvider.sendEmail(context, options.emailAddress, subject, body);
+  };
+};
+
+const alreadyRegisteredEmail = (options: {
+  emailAddress: string;
+  domainUrl: string;
+}) => {
+  const loginUrl = `${options.domainUrl}/login`;
+  const subject = "既に登録されています";
+  const body = renderToString(
+    <>
+      <p>ご利用ありがとうございます。</p>
+      <p>
+        以下のメールアドレスは既に登録されています。
+        <br />
+        <br />
+        {options.emailAddress}
+      </p>
+
+      <p>
+        以下のリンクをクリックして改めてログインをお願いします。
+        <br />
+        <br />
+        <a href={loginUrl}>{loginUrl}</a>
+      </p>
+
+      <p>何かご不明な点があれば、お気軽にご連絡ください。</p>
+    </>,
+  );
+  return { subject, body };
+};
+
+const signupEmail = (options: {
+  emailAddress: string;
+  registrationLink: string;
+}) => {
+  const subject = "新規登録URL";
+  const body = renderToString(
+    <>
+      <p>
+        ご利用ありがとうございます。新規登録するには、以下のリンクをクリックしてください。
+        <br />
+        <br />
+        <a href={options.registrationLink}>{options.registrationLink}</a>
+      </p>
+      <p>
+        新規登録リンクは30分間有効です。
+        <br />
+        <br />
+        何かご不明な点があれば、お気軽にご連絡ください。
+      </p>
+    </>,
+  );
+  return { subject, body };
+};
+
+export const sendSignupEmail = (context: AppLoadContext) => {
+  return async (options: {
+    emailAddress: string;
+    registrationLink: string;
+    user?: User | null;
+    domainUrl: string;
+  }) => {
+    const { subject, body } = options.user
+      ? alreadyRegisteredEmail(options)
+      : signupEmail(options);
+    await emailProvider.sendEmail(context, options.emailAddress, subject, body);
+  };
+};
+
+const signupCompleteEmail = (options: {
+  emailAddress: string;
+  domainUrl: string;
+}) => {
+  const loginUrl = `${options.domainUrl}/login`;
+  const subject = "新規登録完了";
+  const body = renderToString(
+    <>
+      <p>ご利用ありがとうございます。</p>
+      <p>
+        以下のメールアドレスで新規登録が完了しました。
+        <br />
+        <br />
+        {options.emailAddress}
+      </p>
+
+      <p>
+        以下のリンクをクリックしてログインをお願いします。
+        <br />
+        <br />
+        <a href={loginUrl}>{loginUrl}</a>
+      </p>
+
+      <p>何かご不明な点があれば、お気軽にご連絡ください。</p>
+    </>,
+  );
+  return { subject, body };
+};
+
+export const sendSignupCompleteEmail = (context: AppLoadContext) => {
+  return async (options: { emailAddress: string; domainUrl: string }) => {
+    const { subject, body } = signupCompleteEmail(options);
     await emailProvider.sendEmail(context, options.emailAddress, subject, body);
   };
 };

@@ -3,7 +3,7 @@ import { EmailLinkStrategy } from "remix-auth-email-link";
 import { z } from "zod";
 
 import { getUserByEmail } from "~/features/users/services/users.server";
-import { sendEmail } from "./email.server";
+import { sendLoginEmail } from "./email.server";
 import { getSessionStorage } from "./session.server";
 
 import type { AppLoadContext } from "@remix-run/cloudflare";
@@ -36,7 +36,7 @@ export const getAuthenticator = (context: AppLoadContext) => {
     new EmailLinkStrategy(
       {
         verifyEmailAddress,
-        sendEmail: sendEmail(context),
+        sendEmail: sendLoginEmail(context),
         secret,
         callbackURL: "/magic",
       },

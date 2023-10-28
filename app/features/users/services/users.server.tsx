@@ -32,6 +32,12 @@ export const selectUserSchema = createSelectSchema(users, {
   email: (schema) => schema.email.email(),
 });
 
+export const insert = async (context: AppLoadContext, user: InsertUser) => {
+  const env = context.env as Env;
+  const db = createClient(env.DB);
+  return await db.insert(users).values(user).execute();
+};
+
 export const getUserByEmail = async (
   context: AppLoadContext,
   email: string,

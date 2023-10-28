@@ -24,7 +24,8 @@ export default function App() {
   useEffect(() => {
     if (
       location.pathname.startsWith("/login") ||
-      location.pathname.startsWith("/signup")
+      location.pathname.startsWith("/signup") ||
+      location.pathname.startsWith("/registration")
     ) {
       document.documentElement.classList.add("bg-gray-50");
     } else {

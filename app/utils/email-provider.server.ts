@@ -6,39 +6,51 @@ export async function sendEmail(
   context: AppLoadContext,
   to: string,
   subject: string,
-  body: string,
+  body: string
 ) {
   const env = context.env as Env;
 
-  // const apiKey = env.SENDGRID_API_KEY;
+  const apiKey = env.SENDGRID_API_KEY;
   const fromEmail = env.FROM_EMAIL;
 
-  console.log(
-    "Sending email to",
-    to,
-    "from",
-    fromEmail,
-    "with subject",
-    subject,
-    "and body",
-    body,
-  );
+  if (!apiKey && process.env.NODE_ENV === "development") {
+    console.log(
+      "Sending email to",
+      to,
+      "from",
+      fromEmail,
+      "with subject",
+      subject,
+      "and body",
+      body
+    );
+    return;
+  }
 
-  // Sendgrid.setApiKey(apiKey);
-
-  // try {
-  //   return await Sendgrid.send({
-  //     to,
-  //     from: fromEmail,
-  //     subject,
-  //     text: body.toString(),
-  //     html: body.toString(),
-  //   });
-  // } catch (error: any) {
-  //   console.error(error);
-
-  //   if (error.response) {
-  //     console.error(error.response.body);
-  //   }
-  // }
+  await fetch("https://api.sendgrid.com/v3/mail/send", {
+    body: JSON.stringify({
+      personalizations: [
+        {
+          to: [{ email: to }],
+          subject,
+        },
+      ],
+      from: { email: fromEmail },
+      content: [
+        {
+          type: "text/plain",
+          value: body,
+        },
+        {
+          type: "text/html",
+          value: body,
+        },
+      ],
+    }),
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
 }
