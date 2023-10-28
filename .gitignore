@@ -8,3 +8,6 @@ node_modules
 /functions/version.txt
 /public/build
 .dev.vars
+
+# Sentry Config File
+.sentryclirc

@@ -1,4 +1,4 @@
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "url-temporary-storage-preview"
-database_id = "bff9996d-d173-4301-ab58-eb32f3df3376"
+database_name = "${DATABASE_NAME}"
+database_id = "${DATABASE_ID}"

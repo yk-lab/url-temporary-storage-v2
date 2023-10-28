@@ -6,7 +6,7 @@ export async function sendEmail(
   context: AppLoadContext,
   to: string,
   subject: string,
-  body: string
+  body: string,
 ) {
   const env = context.env as Env;
 
@@ -22,7 +22,7 @@ export async function sendEmail(
       "with subject",
       subject,
       "and body",
-      body
+      body,
     );
     return;
   }

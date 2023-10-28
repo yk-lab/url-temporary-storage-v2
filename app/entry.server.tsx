@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/remix";
 /**
  * By default, Remix will handle generating the HTTP Response for you.
  * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
@@ -9,13 +10,23 @@ import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToReadableStream } from "react-dom/server";
 
+export function handleError(error: Error, { request }: { request: Request }) {
+  Sentry.captureRemixServerException(error, "remix.server", request);
+}
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  loadContext: AppLoadContext,
+  loadContext: AppLoadContext
 ) {
+  const env = loadContext.env as Env;
+  Sentry.init({
+    dsn: env.SENTRY_DSN,
+    tracesSampleRate: 1,
+  });
+
   const body = await renderToReadableStream(
     <RemixServer context={remixContext} url={request.url} />,
     {
@@ -25,7 +36,7 @@ export default async function handleRequest(
         console.error(error);
         responseStatusCode = 500;
       },
-    },
+    }
   );
 
   if (isbot(request.headers.get("user-agent"))) {
