@@ -28,9 +28,8 @@ export let loader = async ({ context, request }: LoaderFunctionArgs) => {
   });
 };
 
-export let action = async ({ context, request }: ActionFunctionArgs) => {
+export let action = async ({ context, request }: ActionFunctionArgs) => {  
   const clonedRequest = request.clone();
-
   const payload = Object.fromEntries(await clonedRequest.formData());
 
   // The success redirect is required in this action, this is where the user is
@@ -42,6 +41,7 @@ export let action = async ({ context, request }: ActionFunctionArgs) => {
       action: z.enum(["login", "reset"]),
     })
     .parse(payload);
+
   if (action === "login") {
     return auth.authenticate("email-link", request, {
       successRedirect: "/login",
