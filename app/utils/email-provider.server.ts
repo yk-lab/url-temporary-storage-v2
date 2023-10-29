@@ -27,30 +27,40 @@ export async function sendEmail(
     return;
   }
 
-  await fetch("https://api.sendgrid.com/v3/mail/send", {
-    body: JSON.stringify({
-      personalizations: [
-        {
-          to: [{ email: to }],
-          subject,
-        },
-      ],
-      from: { email: fromEmail },
-      content: [
-        {
-          type: "text/plain",
-          value: body,
-        },
-        {
-          type: "text/html",
-          value: body,
-        },
-      ],
-    }),
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-  });
+  try {
+    console.log("Sending email to", to, "from", fromEmail);
+    const resp = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [{ email: to }],
+            subject,
+          },
+        ],
+        from: { email: fromEmail },
+        content: [
+          {
+            type: "text/plain",
+            value: body,
+          },
+          {
+            type: "text/html",
+            value: body,
+          },
+        ],
+      }),
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+    const text = await resp.text();
+    if (!resp.ok) {
+      throw new Error(text);
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to send email");
+  }
 }
