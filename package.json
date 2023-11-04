@@ -14,7 +14,7 @@
     "migrations:apply": "NO_D1_WARNING=true wrangler d1 migrations apply url-temporary-storage"
   },
   "dependencies": {
-    "@remix-run/cloudflare": "2.1.0",
+    "@remix-run/cloudflare": "2.2.0",
     "@remix-run/cloudflare-pages": "2.1.0",
     "@remix-run/css-bundle": "2.1.0",
     "@remix-run/react": "2.1.0",
