@@ -1,5 +1,3 @@
-// import Sendgrid from "@sendgrid/mail";
-
 import type { AppLoadContext } from "@remix-run/cloudflare";
 
 export async function sendEmail(

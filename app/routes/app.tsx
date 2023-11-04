@@ -56,7 +56,7 @@ export const action = async ({ context, request }: ActionFunctionArgs) => {
       ...payload,
       id: crypto.randomUUID(),
       userId: user.id,
-    }),
+    })
   );
   return json({ ok: true, action: "add", item }, { status: 201 });
 };
@@ -83,23 +83,26 @@ export default function App() {
         urlFieldRef.current?.focus();
       }
     },
-    [navigation.state, actionData],
+    [navigation.state, actionData]
   );
 
   const getTitle = async (url: string) => {
     return new Promise<string>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function (ev) {
-        const title = this.responseXML?.title || "no title";
-        console.log(this.responseXML, ev, title);
-        resolve(title);
+        console.log(ev, xhr.response);
+        resolve(
+          [xhr.response.title, xhr.response.siteName]
+            .filter(Boolean)
+            .join(" - ")
+        );
       };
       xhr.onerror = function (ev) {
         reject(ev);
       };
-      xhr.open("GET", url, true);
-      xhr.responseType = "document";
-      xhr.send();
+      xhr.open("POST", "/ogp/", true);
+      xhr.responseType = "json";
+      xhr.send(JSON.stringify({ url }));
     });
   };
 
@@ -111,9 +114,14 @@ export default function App() {
     const url = event.target.value;
     if (!url) return;
     if (!nameFieldRef.current || isNameManuallyChanged.current) return;
-    getTitle(url).then((title) => {
-      nameFieldRef.current!.value = title;
-    });
+    try {
+      getTitle(z.string().url().parse(url)).then((title) => {
+        nameFieldRef.current!.value = title;
+      });
+    } catch (err) {
+      console.error(err);
+      return;
+    }
   };
 
   return (
