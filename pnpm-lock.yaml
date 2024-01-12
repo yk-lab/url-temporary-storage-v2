@@ -9,8 +9,8 @@ dependencies:
     specifier: 2.1.0
     version: 2.1.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2)
   '@remix-run/cloudflare-pages':
-    specifier: 2.1.0
-    version: 2.1.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2)
+    specifier: 2.5.0
+    version: 2.5.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2)
   '@remix-run/css-bundle':
     specifier: 2.1.0
     version: 2.1.0
@@ -1462,8 +1462,8 @@ packages:
     dev: true
     optional: true
 
-  /@remix-run/cloudflare-pages@2.1.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-Ia6k6wFwK13/YHrFyKGJ8H/WHnPjyiQW7oTqQjJ34Oev/HTHIro9Y07FMoy8UHMZNYmqrpZ9P2bbIN5b/Oco9A==}
+  /@remix-run/cloudflare-pages@2.5.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-JBsfzeJeTehV/YOLVPutInqDOs9jJ3PwTYVrdw6O7IXD7yp1vM7x8HnXn1FRbVdzNLlAY8zvTxZHN+DC1C6qZg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@cloudflare/workers-types': ^4.0.0
@@ -1473,7 +1473,7 @@ packages:
         optional: true
     dependencies:
       '@cloudflare/workers-types': 4.20231025.0
-      '@remix-run/cloudflare': 2.1.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2)
+      '@remix-run/cloudflare': 2.5.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2)
       typescript: 5.2.2
     dev: false
 
@@ -1490,6 +1490,22 @@ packages:
       '@cloudflare/kv-asset-handler': 0.1.3
       '@cloudflare/workers-types': 4.20231025.0
       '@remix-run/server-runtime': 2.1.0(typescript@5.2.2)
+      typescript: 5.2.2
+    dev: false
+
+  /@remix-run/cloudflare@2.5.0(@cloudflare/workers-types@4.20231025.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-OGnnvN397wxgZ+G0+ar2Ct7y8T0Jaxt+VDTT1jDbjDYKryo0WC/jz+IvkBZI5Lb6FOg+/XQVyYlmzO7RSDcGrQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.0.0
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@cloudflare/kv-asset-handler': 0.1.3
+      '@cloudflare/workers-types': 4.20231025.0
+      '@remix-run/server-runtime': 2.5.0(typescript@5.2.2)
       typescript: 5.2.2
     dev: false
 
@@ -1654,6 +1670,11 @@ packages:
     resolution: {integrity: sha512-Lm+fYpMfZoEucJ7cMxgt4dYt8jLfbpwRCzAjm9UgSLOkmlqo9gupxt6YX3DY0Fk155NT9l17d/ydi+964uS9Lw==}
     engines: {node: '>=14.0.0'}
 
+  /@remix-run/router@1.14.2:
+    resolution: {integrity: sha512-ACXpdMM9hmKZww21yEqWwiLws/UPLhNKvimN8RrYSqPSvB3ov7sLvAcfvaxePeLvccTQKGdkDIhLYApZVDFuKg==}
+    engines: {node: '>=14.0.0'}
+    dev: false
+
   /@remix-run/server-runtime@2.1.0(typescript@5.2.2):
     resolution: {integrity: sha512-Uz69yF4Gu6F3VYQub3JgDo9godN8eDMeZclkadBTAWN7bYLonu0ChR/GlFxS35OLeF7BDgudxOSZob0nE1WHNg==}
     engines: {node: '>=18.0.0'}
@@ -1670,6 +1691,24 @@ packages:
       set-cookie-parser: 2.6.0
       source-map: 0.7.4
       typescript: 5.2.2
+
+  /@remix-run/server-runtime@2.5.0(typescript@5.2.2):
+    resolution: {integrity: sha512-Lf/cflOOmx+IAZ1Kd3vKTFhXOS5cUbc2E8pjBE+5xF/1aHI+3NhqqS/haimZ+LaPa4GP8D+0lE6t2Q+2bXJXmg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@remix-run/router': 1.14.2
+      '@types/cookie': 0.6.0
+      '@web3-storage/multipart-parser': 1.0.0
+      cookie: 0.6.0
+      set-cookie-parser: 2.6.0
+      source-map: 0.7.4
+      typescript: 5.2.2
+    dev: false
 
   /@remix-run/web-blob@3.1.0:
     resolution: {integrity: sha512-owGzFLbqPH9PlKb8KvpNJ0NO74HWE2euAn61eEiyCXX/oteoVzTVSN8mpLgDjaxBf2btj5/nUllSUgpyd6IH6g==}
@@ -1775,6 +1814,10 @@ packages:
 
   /@types/cookie@0.4.1:
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
+
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
 
   /@types/debug@4.1.10:
     resolution: {integrity: sha512-tOSCru6s732pofZ+sMv9o4o3Zc+Sa8l3bxd/tweTQudFn06vAzb13ZX46Zi6m6EJ+RUbRTHvgQJ1gBtSgkaUYA==}
@@ -2691,6 +2734,11 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
     dev: true
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
